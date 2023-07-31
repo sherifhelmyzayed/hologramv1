@@ -4,9 +4,8 @@ import { Canvas, extend, useLoader } from "@react-three/fiber";
 import { OrbitControls, Environment, useProgress, Html, Sphere } from "@react-three/drei";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
-import B02 from "./Components/B02";
 import GoogleEarthMin from "./Components/GoogleEarthMin";
-import B01 from "./Components/B01";
+import { Model } from "./Components/B03";
 import image360 from './images/3602.jpeg';
 
 extend({ OrbitControls });
@@ -48,14 +47,6 @@ function Dome() {
         />
 
       </Sphere>
-      {/* <mesh rotation={[0, 3, 0]}>
-        <sphereBufferGeometry attach="geometry" args={[5000, 1000, 1000]} />
-        <meshPhysicalMaterial
-          attach="material"
-          map={colorMap}
-          side={THREE.BackSide}
-        />
-      </mesh> */}
     </group>
   );
 }
@@ -82,24 +73,20 @@ function App() {
           autoRotate={true}
           autoRotateSpeed={1}
           zoomSpeed={0.3}
-          minDistance={500}
-          maxDistance={4000}
+          minDistance={600}
+          maxDistance={800}
+          target={new THREE.Vector3(-300, -50, 300)}
         ></OrbitControls>
         <Suspense fallback={<Loader />}>
-          <B02 rotation={[0, Math.PI / -2, 0]} position={[-150, -200, 0]} />
           <Dome />
-          <B01 position={[-150, -200, -800]} />
-          <B02 rotation={[0, Math.PI / -2, 0]} position={[-150, -200, 0]} />
-          <B01 position={[-900, -200, -800]} />
-          <B02 rotation={[0, Math.PI / -2, 0]} position={[-900, -200, 0]} />
-          <B01 position={[-900, -200, 800]} />
-          <B01 position={[-150, -200, 800]} />
+          <Model scale={12} position={[-300, -230, 300]} />
           <GoogleEarthMin scale={[1.3, 1.3, 1.3]} position={[200, -180, 400]} />
-          <Environment preset="warehouse" background="./098_hdrmaps_com_free1.exr" />
+          <Environment preset="warehouse" intensity={2} background="./098_hdrmaps_com_free1.exr" />
         </Suspense>
 
-        <directionalLight position={[-600, -500, 50]} intensity={.1}
-        />
+        <directionalLight color={"white"} position={[0, -500, 50]} intensity={1} />
+        <ambientLight color={"white"} intensity={0.5} />
+
         <group rotation={[0, -1.6, 0]} position={[-230, 0, 212]} >
           <Box position={[-295, -175, 110]} free={true} floor={1} color={"orange"} />
           <Box position={[-295, -146, 110]} free={true} floor={2} color={"orange"} />
